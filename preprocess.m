@@ -1,5 +1,11 @@
 function [ output_image ] = preprocess( image )
 
+%first we filter the image based on value to get rid of areas that are too
+%light
+%then we use connected components and filter based on the size compared to
+%the median connected component to filter out large or small areas that
+%aren't letters.
+
 throughput_image = rgb2hsv(image);
 val = throughput_image(:,:,3);
 sat = throughput_image(:,:,2);
@@ -18,7 +24,7 @@ for i = 1:n
 end
 med = median(sizes);
 for i = 1:n
-    if (sizes(i) < 0.35*med || sizes(i) > 3*med)
+    if (sizes(i) < 0.35*med || sizes(i) > 2.5*med)
         output_image(cc == i) = 0;
     end
 end
