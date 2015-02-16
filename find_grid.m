@@ -10,7 +10,8 @@ initialPoints = zeros(size(boxes, 1), 2);
 
 for i = 1:size(boxes, 1)
     area = boxes(i).BoundingBox(3) * boxes(i).BoundingBox(4);
-    center = [boxes(i).BoundingBox(1) + boxes(i).BoundingBox(3) / 2, boxes(i).BoundingBox(2) + boxes(i).BoundingBox(4) / 2];
+    %center = [boxes(i).BoundingBox(1) + boxes(i).BoundingBox(3) / 2, boxes(i).BoundingBox(2) + boxes(i).BoundingBox(4) / 2];
+    center = [boxes(i).BoundingBox(1), boxes(i).BoundingBox(2)];
     
     % Take their centroids
     initialPoints(i, :) = center;
@@ -49,8 +50,8 @@ offsets = [x(:) y(:)];
 
 % viscircles(centers, [2; 2]);
 
-pointsModX = initialPoints * [cos(-theta(1)) -sin(-theta(1)); sin(-theta(1)) cos(-theta(1))];
-pointsModY = initialPoints * [cos(-theta(2)) -sin(-theta(2)); sin(-theta(2)) cos(-theta(2))];
+pointsModX = [cos(-theta(1)) -sin(-theta(1)); sin(-theta(1)) cos(-theta(1))] * transpose(initialPoints);
+pointsModY = [cos(-theta(2)) -sin(-theta(2)); sin(-theta(2)) cos(-theta(2))] * transpose(initialPoints);
 
 centers
 
