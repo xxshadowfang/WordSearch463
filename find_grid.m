@@ -44,7 +44,7 @@ angles = newang(:, 2:4);
 
 offsets = [x(:) y(:)];
 
-[index, centers] = kmeans(offsets, 2);
+[index, centers] = kmeans(offsets, 2,'Start','cluster');
 [theta, rho] = cart2pol(centers(:, 1), centers(:, 2));
 
 % viscircles(centers, [2; 2]);
@@ -63,8 +63,8 @@ circles = zeros(40 * 40, 2);
 
 for i=1:40
     for j=1:40
-        x = centers(1, :) .* (i - 20) + centers(1, :) ./ norm(centers(1, :)) .* offsetX;
-        y = centers(2, :) .* (j - 20) + centers(2, :) ./ norm(centers(2, :)) .* offsetY;
+        x = centers(1, :) .* (i - 19) + centers(1, :) ./ norm(centers(1, :)) .* offsetX;
+        y = centers(2, :) .* (j - 19) + centers(2, :) ./ norm(centers(2, :)) .* offsetY;
         
         circles((i - 1) * 40 + j, :) = x + y;
     end
