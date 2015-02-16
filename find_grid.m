@@ -1,4 +1,4 @@
-function [ angle, horizontal_offset, vertical_offset, horizontal_spacing, vertical_spacing ] = find_grid( image )
+function [ angle, horizontal_offset, vertical_offset, horizontal_spacing, vertical_spacing, grid_points ] = find_grid( image )
 
 % Find connected components
 cc = bwconncomp(1-image, 8);
