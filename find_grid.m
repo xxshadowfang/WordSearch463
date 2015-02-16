@@ -42,40 +42,46 @@ angles = newang(:, 2:5);
 figure;
 scatter(x(:), y(:));
 
-
 offsets = [x(:) y(:)];
 
 [index, centers] = kmeans(offsets, 2, 'distance', 'cityblock', 'start', 'cluster');
+centers = sortrows(centers, 1);
+
 [theta, rho] = cart2pol(centers(:, 1), centers(:, 2));
 
 
 viscircles(centers, ones(1, size(centers, 1)) .* 2);
 
-pointsModX = initialPoints * [cos(-theta(2)) -sin(-theta(2)); sin(-theta(2)) cos(-theta(2))];
-pointsModY = initialPoints * [cos(-theta(1)) -sin(-theta(1)); sin(-theta(1)) cos(-theta(1))];
+pointsModY = initialPoints * [cos(-theta(2)) -sin(-theta(2)); sin(-theta(2)) cos(-theta(2))];
+pointsModX = initialPoints * [cos(-theta(1)) -sin(-theta(1)); sin(-theta(1)) cos(-theta(1))];
 
-offsetX = median(mod(pointsModX(:, 1), rho(1)));
-offsetY = median(mod(pointsModY(:, 1), rho(2)));
+horizontal_offset = median(mod(pointsModX(:, 1), rho(1)));
+vertical_offset = median(mod(pointsModY(:, 1), rho(2)));
+
+horizontal_spacing = rho(1);
+vertical_spacing = rho(2);
+
+angle = theta(1);
 
 figure;
 imshow(image);
 
-circles = zeros(40 * 40, 2);
+grid_points = generate_points(size(image, 2), size(image, 1), angle, horizontal_offset, vertical_offset, horizontal_spacing, vertical_spacing);
 
-for i=1:40
-    for j=1:40
-        x = centers(1, :) .* (i - 20) - centers(1, :) ./ norm(centers(1, :)) .* offsetX;
-        y = centers(2, :) .* (j - 20) - centers(2, :) ./ norm(centers(2, :)) .* offsetY;
-        
-        circles((i - 1) * 40 + j, :) = x + y;
-    end
-end
+grid_point_x = grid_points(:, :, 1);
+grid_point_y = grid_points(:, :, 2);
+grid = [grid_point_x(:), grid_point_y(:)];
 
-viscircles(circles, repmat([10], 40 * 40, 1), 'LineWidth', 1);
+% viscircles(grid, repmat([10], size(grid, 1), 1), 'LineWidth', 1, 'EdgeColor', 'b');
 
-%When we find the angle, we should rotate the image, then find the offsets
+[angle, horizontal_offset, vertical_offset, horizontal_spacing, vertical_spacing] = gradient_descent(initialPoints, size(image, 2), size(image, 1), angle, horizontal_offset, vertical_offset, horizontal_spacing, vertical_spacing);
 
-%Offset should be the upperleft corner of a character in the grid
-%How do we tell the number of characters horz and vert?
+grid_points = generate_points(size(image, 2), size(image, 1), angle, horizontal_offset, vertical_offset, horizontal_spacing, vertical_spacing);
+
+grid_point_x = grid_points(:, :, 1);
+grid_point_y = grid_points(:, :, 2);
+grid = [grid_point_x(:), grid_point_y(:)];
+
+viscircles(grid, repmat([10], size(grid, 1), 1), 'LineWidth', 1, 'EdgeColor', 'r');
 
 end
