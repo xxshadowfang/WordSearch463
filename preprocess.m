@@ -17,6 +17,8 @@ output_image = hsv2rgb(throughput_image);
 output_image = rgb2gray(output_image);
 output_image(output_image < 1) = 0;
 output_image = 1 - output_image;
+
+
 [cc, n] = bwlabel(output_image);
 sizes = zeros(1, n);
 for i = 1:n
@@ -28,7 +30,16 @@ for i = 1:n
         output_image(cc == i) = 0;
     end
 end
-output_image = 1 - output_image;
+
+output_image1 = imdilate(output_image,strel('square',30));
+output_image1 = imerode(output_image1,strel('square',40));
+output_image1 = imdilate(output_image,strel('square',40));
+
+
+imtool(output_image1);
+imtool(output_image);
+%output_image = 1-output_image;
+
 
 end
 

@@ -44,8 +44,10 @@ scatter(x(:), y(:));
 
 offsets = [x(:) y(:)];
 
+
 [index, centers] = kmeans(offsets, 2, 'distance', 'cityblock', 'start', 'cluster');
 centers = sortrows(centers, 1);
+
 
 [theta, rho] = cart2pol(centers(:, 1), centers(:, 2));
 
@@ -68,6 +70,7 @@ imshow(image);
 
 grid_points = generate_points(size(image, 2), size(image, 1), angle, horizontal_offset, vertical_offset, horizontal_spacing, vertical_spacing);
 
+
 grid_point_x = grid_points(:, :, 1);
 grid_point_y = grid_points(:, :, 2);
 grid = [grid_point_x(:), grid_point_y(:)];
@@ -75,6 +78,7 @@ grid = [grid_point_x(:), grid_point_y(:)];
 % viscircles(grid, repmat([10], size(grid, 1), 1), 'LineWidth', 1, 'EdgeColor', 'b');
 
 [angle, horizontal_offset, vertical_offset, horizontal_spacing, vertical_spacing] = gradient_descent(initialPoints, size(image, 2), size(image, 1), angle, horizontal_offset, vertical_offset, horizontal_spacing, vertical_spacing);
+
 
 grid_points = generate_points(size(image, 2), size(image, 1), angle, horizontal_offset, vertical_offset, horizontal_spacing, vertical_spacing);
 
