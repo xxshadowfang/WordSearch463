@@ -2,14 +2,12 @@ function [ words_found ] = solve( grid, words )
 words_found = [];
 
 [~, Index] = sort(cellfun('size', words, 1), 'ascend');
-sortWords = words(Index)
-numWords = size(sortWords);
+sortWords = words(Index);
 
-    for i = 1:(numWords(1,2))
-        i
-    solveWord = char(sortWords(i));
-    
-    words_found =vertcat( words_found,singleSolve(grid,solveWord))
+    for i = 1:size(sortWords, 1)
+        solveWord = char(sortWords(i));
+        
+        words_found = vertcat(words_found, find_word(grid, solveWord));
     end
    
 end

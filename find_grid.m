@@ -39,8 +39,8 @@ angles = newang(:, 2:5);
 [x, y] = pol2cart(angles(:), distances(:));
 
 % hold on;
-figure;
-scatter(x(:), y(:));
+% figure;
+% scatter(x(:), y(:));
 
 offsets = [x(:) y(:)];
 
@@ -52,7 +52,7 @@ centers = sortrows(centers, 1);
 [theta, rho] = cart2pol(centers(:, 1), centers(:, 2));
 
 
-viscircles(centers, ones(1, size(centers, 1)) .* 2);
+% viscircles(centers, ones(1, size(centers, 1)) .* 2);
 
 pointsModY = initialPoints * [cos(-theta(2)) -sin(-theta(2)); sin(-theta(2)) cos(-theta(2))];
 pointsModX = initialPoints * [cos(-theta(1)) -sin(-theta(1)); sin(-theta(1)) cos(-theta(1))];
@@ -65,8 +65,8 @@ vertical_spacing = rho(2);
 
 angle = theta(1);
 
-figure;
-imshow(image);
+% figure;
+% imshow(image);
 
 grid_points = generate_points(size(image, 2), size(image, 1), angle, horizontal_offset, vertical_offset, horizontal_spacing, vertical_spacing);
 
@@ -86,6 +86,6 @@ grid_point_x = grid_points(:, :, 1);
 grid_point_y = grid_points(:, :, 2);
 grid = [grid_point_x(:), grid_point_y(:)];
 
-viscircles(grid, repmat([10], size(grid, 1), 1), 'LineWidth', 1, 'EdgeColor', 'r');
+% viscircles(grid, repmat([10], size(grid, 1), 1), 'LineWidth', 1, 'EdgeColor', 'r');
 
 end

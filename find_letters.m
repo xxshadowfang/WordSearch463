@@ -53,6 +53,8 @@ function [ letters ] = find_letters( image, grid_points, horizontal_spacing, ver
     
     for i = 1:size(grid_points, 1)
         for j = 1:size(grid_points, 2)
+            letters(i, j) = '^';
+            
             point = repmat(permute(grid_points(i, j, :), [1 3 2]), size(nonBlank, 1), 1);
             
             distances = sum((point - letterCenters) .^ 2, 2);
@@ -64,7 +66,7 @@ function [ letters ] = find_letters( image, grid_points, horizontal_spacing, ver
         end
     end
     
-    imshow(original);
-    viscircles(letterCenters, repmat([10], size(letterCenters, 1), 1), 'LineWidth', 1, 'EdgeColor', 'r');
+%     imshow(original);
+%     viscircles(letterCenters, repmat([10], size(letterCenters, 1), 1), 'LineWidth', 1, 'EdgeColor', 'r');
 end
 
