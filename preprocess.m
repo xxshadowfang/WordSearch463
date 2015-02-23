@@ -38,7 +38,7 @@ output_image1 = imdilate(output_image,strel('square',40));
 
 imtool(output_image1);
 imtool(output_image);
-%output_image = 1-output_image;
+output_image = 1-output_image;
 
 
 end

@@ -22,7 +22,7 @@ function [ letters, full_letters, bounding_boxes ] = find_letters( image, grid_p
                 let = imrotate(let,180*angle/pi,'crop');
                 %imtool(let);
                 lettarr = char(zeros(4,1));
-                confarr = zeros(4,1));
+                confarr = zeros(4,1);
                 r = ocr(let, 'CharacterSet', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'TextLayout', 'Block');
                 if numel(r.Text) == 0;
                     lettarr(1) = '^';
@@ -71,7 +71,7 @@ function [ letters, full_letters, bounding_boxes ] = find_letters( image, grid_p
                     confarr(4) = r.CharacterConfidences(1);
                 end
                 [newconf, I] = sort(confarr, 'descend');
-                hletters(i,j) = lettar(I(1));
+                hletters(i,j) = lettarr(I(1));
             else
                 hletters(i,j) = '^';
             end
@@ -80,9 +80,9 @@ function [ letters, full_letters, bounding_boxes ] = find_letters( image, grid_p
     letters = hletters;
     results = ocr(image, 'CharacterSet', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'TextLayout', 'Block');
     full_letters = results.Text;
-    bounding_boxes = zeros(length(results),4);
-    for i = 1:length(results)
-        bounding_boxes(i) = results(i).CharacterBoundingBoxes(:);
+    bounding_boxes = zeros(length(results.CharacterBoundingBoxes(:,1)),4);
+    for i = 1:length(results.CharacterBoundingBoxes(:,1))
+        bounding_boxes(i,:) = results.CharacterBoundingBoxes(i,:);
     end
 end
 
