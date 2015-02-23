@@ -30,14 +30,6 @@ for i = 1:n
         output_image(cc == i) = 0;
     end
 end
-
-output_image1 = imdilate(output_image,strel('square',30));
-output_image1 = imerode(output_image1,strel('square',40));
-output_image1 = imdilate(output_image,strel('square',40));
-
-
-imtool(output_image1);
-imtool(output_image);
 output_image = 1-output_image;
 
 
